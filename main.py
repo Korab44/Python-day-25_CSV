@@ -15,6 +15,8 @@ score = turtle.Turtle()
 while len(guessed_list) < 50:
     answer_state = screen.textinput(title=f"{len(guessed_list)} / 50 States Correct",
                                     prompt="What's another state name? ").title()
+    if answer_state == "Exit":
+        break
     for each in data.state:
         if each == answer_state:
             score.clear()
@@ -32,10 +34,20 @@ while len(guessed_list) < 50:
             x = int(country_row["x"])
             y = int(country_row["y"])
             tim.goto(x, y)
-            tim.write(arg=answer_state, align="center", font=("Courier", 10, "bold"))
+            tim.write(arg=answer_state, align="center", font=("Courier", 7, "bold"))
+
+list_not_found = {"not found": []}
+for each in data.state:
+    if each in guessed_list:
+        pass
+    else:
+        list_not_found["not found"].append(each)
+        data_not_found = pandas.DataFrame(list_not_found)
+        data_not_found.to_csv("states_to_learn.csv")
 
 
 
-turtle.mainloop()
+
+
 
 
